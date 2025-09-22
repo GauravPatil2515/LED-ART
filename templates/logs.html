@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs & History - LED Controller</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="content-header">
+                <h1 class="page-title"><i class="fas fa-history"></i> Message Logs</h1>
+                <p class="page-subtitle">View message history and system activity</p>
+            </header>
+
+            <div class="content-grid">
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h3><i class="fas fa-list"></i> Message History</h3>
+                        <div class="card-actions">
+                            <button onclick="exportLogs()" class="btn btn-outline">
+                                <i class="fas fa-download"></i> Export CSV
+                            </button>
+                            <button onclick="clearLogs()" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Clear Logs
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-envelope"></i> Message</th>
+                                        <th><i class="fas fa-clock"></i> Timestamp</th>
+                                        <th><i class="fas fa-tag"></i> Type</th>
+                                        <th><i class="fas fa-cogs"></i> Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logs-table-body">
+                                    <tr>
+                                        <td class="message-cell">Happy Birthday John! Wishing you a fantastic year ahead!</td>
+                                        <td>2024-12-15 10:30:00</td>
+                                        <td><span class="badge badge-success">Birthday</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="viewLogDetails(1)">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="message-cell">Welcome to our company event!</td>
+                                        <td>2024-12-15 09:15:00</td>
+                                        <td><span class="badge badge-warning">Manual</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="viewLogDetails(2)">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="message-cell">Test Message</td>
+                                        <td>2024-12-14 16:45:00</td>
+                                        <td><span class="badge badge-warning">Manual</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="viewLogDetails(3)">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="message-cell">Happy Holidays from the team!</td>
+                                        <td>2024-12-14 12:00:00</td>
+                                        <td><span class="badge badge-success">Scheduled</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="viewLogDetails(4)">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-footer">
+                            <p>Showing 4 log entries</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> Log Statistics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">4</div>
+                                <div class="stat-label">Total Messages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">Manual Messages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">1</div>
+                                <div class="stat-label">Birthday Messages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">1</div>
+                                <div class="stat-label">Scheduled Messages</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-filter"></i> Filter Options</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-options">
+                            <div class="form-group">
+                                <label for="filter-type">Message Type:</label>
+                                <select id="filter-type" onchange="filterLogs()">
+                                    <option value="all">All Types</option>
+                                    <option value="manual">Manual</option>
+                                    <option value="birthday">Birthday</option>
+                                    <option value="scheduled">Scheduled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-date">Date Range:</label>
+                                <input type="date" id="filter-date-from" onchange="filterLogs()">
+                                <span>to</span>
+                                <input type="date" id="filter-date-to" onchange="filterLogs()">
+                            </div>
+                            <button onclick="resetFilters()" class="btn btn-outline">
+                                <i class="fas fa-undo"></i> Reset Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <ul class="bottom-nav-list">
+                <li class="bottom-nav-item">
+                    <a href="index.html" class="bottom-nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="birthdays.html" class="bottom-nav-link">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Birthdays</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="messages.html" class="bottom-nav-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="logs.html" class="bottom-nav-link active">
+                        <i class="fas fa-history"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="settings.html" class="bottom-nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Log Details Modal -->
+        <div id="log-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-eye"></i> Log Details</h3>
+                    <button onclick="closeModal()" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" id="log-details">
+                    <!-- Log details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear all logs? This action cannot be undone.')) {
+                showNotification('Clearing logs...', 'info');
+                setTimeout(() => {
+                    document.getElementById('logs-table-body').innerHTML = '';
+                    showNotification('Logs cleared successfully!', 'success');
+                }, 1000);
+            }
+        }
+
+        function viewLogDetails(logId) {
+            const logDetails = {
+                1: { message: "Happy Birthday John! Wishing you a fantastic year ahead!", timestamp: "2024-12-15 10:30:00", type: "Birthday", status: "Sent" },
+                2: { message: "Welcome to our company event!", timestamp: "2024-12-15 09:15:00", type: "Manual", status: "Sent" },
+                3: { message: "Test Message", timestamp: "2024-12-14 16:45:00", type: "Manual", status: "Sent" },
+                4: { message: "Happy Holidays from the team!", timestamp: "2024-12-14 12:00:00", type: "Scheduled", status: "Sent" }
+            };
+
+            const log = logDetails[logId];
+            if (log) {
+                document.getElementById('log-details').innerHTML = `
+                    <div class="log-detail-item">
+                        <strong>Message:</strong> ${log.message}
+                    </div>
+                    <div class="log-detail-item">
+                        <strong>Timestamp:</strong> ${log.timestamp}
+                    </div>
+                    <div class="log-detail-item">
+                        <strong>Type:</strong> ${log.type}
+                    </div>
+                    <div class="log-detail-item">
+                        <strong>Status:</strong> ${log.status}
+                    </div>
+                `;
+                document.getElementById('log-modal').style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('log-modal').style.display = 'none';
+        }
+
+        function filterLogs() {
+            const typeFilter = document.getElementById('filter-type').value;
+            const dateFrom = document.getElementById('filter-date-from').value;
+            const dateTo = document.getElementById('filter-date-to').value;
+
+            const rows = document.querySelectorAll('#logs-table-body tr');
+
+            rows.forEach(row => {
+                let show = true;
+
+                // Filter by type
+                if (typeFilter !== 'all') {
+                    const typeCell = row.cells[2].textContent.toLowerCase();
+                    if (!typeCell.includes(typeFilter)) {
+                        show = false;
+                    }
+                }
+
+                // Filter by date
+                if (dateFrom || dateTo) {
+                    const dateCell = row.cells[1].textContent;
+                    const rowDate = new Date(dateCell);
+
+                    if (dateFrom && rowDate < new Date(dateFrom)) {
+                        show = false;
+                    }
+                    if (dateTo && rowDate > new Date(dateTo + 'T23:59:59')) {
+                        show = false;
+                    }
+                }
+
+                row.style.display = show ? '' : 'none';
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-type').value = 'all';
+            document.getElementById('filter-date-from').value = '';
+            document.getElementById('filter-date-to').value = '';
+            filterLogs();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('log-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

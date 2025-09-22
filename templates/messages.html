@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - LED Controller</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-lightbulb"></i> LED Controller</h2>
+            <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="{{ url_for('birthdays') }}" class="nav-link">
+                <i class="fas fa-birthday-cake"></i> Birthdays
+            </a>
+            <a href="{{ url_for('messages') }}" class="nav-link active">
+                <i class="fas fa-envelope"></i> Messages
+            </a>
+            <a href="{{ url_for('logs') }}" class="nav-link">
+                <i class="fas fa-history"></i> Logs
+            </a>
+            <a href="{{ url_for('settings') }}" class="nav-link">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1><i class="fas fa-envelope"></i> Message Center</h1>
+        </header>
+
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-paper-plane"></i> Send Custom Message</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" onsubmit="return validateForm('message-form')" id="message-form">
+                        <div class="form-group">
+                            <label for="message">Message Content:</label>
+                            <textarea id="message" name="message" placeholder="Enter your message here..." rows="4" required></textarea>
+                            <small class="form-help">Maximum 500 characters. The message will be displayed on the LED board.</small>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="document.getElementById('message').value = ''">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock"></i> Schedule Message</h3>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="scheduleMessage(); return false;" id="schedule-form">
+                        <div class="form-group">
+                            <label for="schedule-time">Schedule Time:</label>
+                            <input type="time" id="schedule-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="schedule-message">Message:</label>
+                            <textarea id="schedule-message" placeholder="Enter scheduled message..." rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="switch">
+                                <input type="checkbox" id="schedule-active">
+                                <span class="slider"></span>
+                                <span class="switch-label">Active Schedule</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-calendar-plus"></i> Schedule Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-magic"></i> AI Message Generator</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="ai-prompt">Prompt for AI:</label>
+                        <input type="text" id="ai-prompt" placeholder="e.g., 'Happy New Year message'" required>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="generateAIMessage()">
+                        <i class="fas fa-brain"></i> Generate with AI
+                    </button>
+                    <div id="ai-result" class="ai-result" style="display: none;">
+                        <h4>Generated Message:</h4>
+                        <p id="ai-message"></p>
+                        <button class="btn btn-sm btn-primary" onclick="useAIMessage()">
+                            <i class="fas fa-check"></i> Use This Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-info-circle"></i> Message Guidelines</h3>
+                </div>
+                <div class="card-body">
+                    <div class="guidelines">
+                        <h4>Tips for Better Messages:</h4>
+                        <ul>
+                            <li>Keep messages under 200 characters for best display</li>
+                            <li>Use clear, simple language</li>
+                            <li>Test messages before scheduling important ones</li>
+                            <li>Consider the LED board's viewing distance</li>
+                        </ul>
+                        <h4>Supported Features:</h4>
+                        <ul>
+                            <li>Real-time message sending</li>
+                            <li>Scheduled message delivery</li>
+                            <li>AI-powered message generation</li>
+                            <li>Message history and logs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        function generateAIMessage() {
+            const prompt = document.getElementById('ai-prompt').value;
+            if (!prompt) {
+                showNotification('Please enter a prompt', 'error');
+                return;
+            }
+
+            showNotification('Generating message with AI...', 'info');
+
+            fetch('/api/generate-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ai-message').textContent = data.message;
+                document.getElementById('ai-result').style.display = 'block';
+                showNotification('Message generated successfully!', 'success');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Failed to generate message', 'error');
+            });
+        }
+
+        function useAIMessage() {
+            const message = document.getElementById('ai-message').textContent;
+            document.getElementById('message').value = message;
+            showNotification('Message copied to form', 'success');
+        }
+    </script>
+</body>
+</html>

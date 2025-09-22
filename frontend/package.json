@@ -1,0 +1,36 @@
+{
+  "name": "led-board-controller-ledart",
+  "version": "1.0.0",
+  "description": "Frontend-only LED board controller with LedArt-style interface for Netlify deployment",
+  "main": "ledart-index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build step required - static files only'",
+    "deploy": "echo 'Deploy to Netlify by uploading the frontend/ directory'"
+  },
+  "keywords": [
+    "led-board",
+    "p10-display",
+    "frontend-only",
+    "netlify",
+    "spa",
+    "led-controller",
+    "dashboard"
+  ],
+  "author": "LedArt Controller",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/led-board-controller"
+  },
+  "homepage": "https://your-netlify-site.netlify.app",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ]
+}

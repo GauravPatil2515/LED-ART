@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Management - LED Controller</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="content-header">
+                <h1 class="page-title"><i class="fas fa-birthday-cake"></i> Birthday Management</h1>
+                <p class="page-subtitle">Manage birthdays and automate celebrations</p>
+            </header>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-upload"></i> Upload Birthdays</h3>
+                    </div>
+                    <div class="card-body">
+                        <form onsubmit="return false;" id="upload-form">
+                            <div class="form-group">
+                                <label for="file">Select CSV or Excel file:</label>
+                                <input type="file" id="file" name="file" accept=".csv,.xlsx" onchange="handleFileUpload(this)" required>
+                                <small class="form-help">Upload a file with columns: Name, Date of Birth (DD/MM/YYYY)</small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Birthday List</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="birthday-list">
+                            <p class="no-data">No birthdays uploaded yet. Upload a file to get started!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="instructions">
+                            <h4>File Format Requirements:</h4>
+                            <ul>
+                                <li>CSV or Excel (.xlsx) format</li>
+                                <li>Columns: Name, Date of Birth</li>
+                                <li>Date format: DD/MM/YYYY</li>
+                                <li>Example: John Doe, 15/06/1990</li>
+                            </ul>
+                            <h4>Features:</h4>
+                            <ul>
+                                <li>Automatic birthday detection</li>
+                                <li>AI-generated birthday messages</li>
+                                <li>Scheduled birthday notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <ul class="bottom-nav-list">
+                <li class="bottom-nav-item">
+                    <a href="index.html" class="bottom-nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="birthdays.html" class="bottom-nav-link active">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Birthdays</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="messages.html" class="bottom-nav-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="logs.html" class="bottom-nav-link">
+                        <i class="fas fa-history"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="settings.html" class="bottom-nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# SPA fallback - redirect all routes to main app
+/*    /ledart-index.html   200
+
+# Handle 404s
+/404.html   /404.html   404

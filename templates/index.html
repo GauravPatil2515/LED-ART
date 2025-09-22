@@ -1,0 +1,181 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P10 LED Board Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="content-header">
+                <h1 class="page-title"><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+                <p class="page-subtitle">Monitor your LED display and manage automated messages</p>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <h3 class="card-title">Upcoming Birthdays</h3>
+                    </div>
+                    <div class="upcoming-birthdays">
+                        {% if upcoming %}
+                            {% for b in upcoming %}
+                            <div class="birthday-item">
+                                <span class="birthday-name">{{ b.name }}</span>
+                                <span class="birthday-days">{{ b.days }} days</span>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-data">No upcoming birthdays</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="card-title">Quick Actions</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn" onclick="sendTestMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Test Message
+                        </button>
+                        <button class="btn btn-secondary" onclick="checkBoardStatus()">
+                            <i class="fas fa-wifi"></i>
+                            Check Board Status
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="card-title">Scheduled Tasks</h3>
+                    </div>
+                    <div class="scheduled-tasks">
+                        <div class="task-item">
+                            <i class="fas fa-sun"></i>
+                            <span>Birthday Messages: 9:00 AM</span>
+                        </div>
+                        <div class="task-item">
+                            <i class="fas fa-moon"></i>
+                            <span>News Headlines: 6:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="card-title">System Status</h3>
+                    </div>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="status-label">AI Service:</span>
+                            <span class="badge badge-success">Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Scheduler:</span>
+                            <span class="badge badge-success">Active</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Board Connection:</span>
+                            <span class="badge badge-warning">Checking...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-activity"></i>
+                    </div>
+                    <h3 class="card-title">Recent Activity</h3>
+                </div>
+                <div class="recent-activity">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Test message sent to LED board</p>
+                            <span class="activity-time">2 minutes ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Birthday message generated for John Doe</p>
+                            <span class="activity-time">1 hour ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">News headline fetched and processed</p>
+                            <span class="activity-time">3 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <ul class="bottom-nav-list">
+                <li class="bottom-nav-item">
+                    <a href="index.html" class="bottom-nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="birthdays.html" class="bottom-nav-link">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Birthdays</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="messages.html" class="bottom-nav-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="logs.html" class="bottom-nav-link">
+                        <i class="fas fa-history"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>
+                <li class="bottom-nav-item">
+                    <a href="settings.html" class="bottom-nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
