@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LED Board Controller - Redirecting...</title>
+    <title>LED Board Controller - Loading...</title>
+    <meta http-equiv="refresh" content="0; url=ledart-index.html">
     <script>
-        // Redirect to the new LedArt interface
-        window.location.href = 'ledart-index.html';
+        // Immediate redirect to the main application
+        window.location.replace('ledart-index.html');
     </script>
     <style>
         body {
@@ -14,15 +15,31 @@
             text-align: center;
             padding: 50px;
             background: #f4f6fb;
+            margin: 0;
         }
         .loading {
             color: #666;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <h1>LED Board Controller</h1>
-    <p class="loading">Redirecting to LedArt interface...</p>
+    <div class="spinner"></div>
+    <p class="loading">Loading application...</p>
     <p><a href="ledart-index.html">Click here if not redirected automatically</a></p>
 </body>
 </html>

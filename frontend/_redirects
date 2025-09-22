@@ -1,3 +1,6 @@
+# Redirect root to main app
+/    /ledart-index.html   200
+
 # SPA fallback - redirect all routes to main app
 /*    /ledart-index.html   200
 
