@@ -1,0 +1,22 @@
+# Netlify ignores - files to exclude from deployment
+# Backend files (not needed for frontend-only deployment)
+../requirements.txt
+../app.py
+../birthdays.db
+../templates/
+../static/
+../.venv/
+../uploads/
+../test_connectivity.py
+../wifi_profile.xml
+
+# Development files
+node_modules/
+.git/
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
+.cache/
