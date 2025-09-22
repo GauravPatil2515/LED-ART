@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "echo 'No build step required - Static frontend-only app'"
+  command = "bash build.sh"
   ignore = "/bin/false"
 
 # SPA fallback for client-side routing
