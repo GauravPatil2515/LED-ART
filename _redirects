@@ -1,0 +1,8 @@
+# Redirect root to main app
+/    /index.html   200
+
+# SPA fallback - redirect all routes to main app
+/*    /index.html   200
+
+# Handle 404s
+/404.html   /404.html   404
